@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zameen.com Replica</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #00a651;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #00a651;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        form label {
+            flex: 1 1 150px;
+            align-self: center;
+        }
+
+        form select,
+        form input,
+        form button {
+            padding: 8px;
+            flex: 1 1 200px;
+        }
+
+        form button {
+            background-color: #00a651;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #008e4c;
+        }
+
+        .property-card {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-card h3 {
+            color: #00a651;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Zameen.com Replica</h1>
+        <p>Pakistan's No.1 Property Website</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#">Buy</a>
+        <a href="#">Rent</a>
+        <a href="#">Projects</a>
+        <a href="#">Plot Finder</a>
+        <a href="#">Agents</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <!-- Search Section -->
+    <div class="container">
+        <h2>Find Property</h2>
+        <form id="searchForm">
+            <label for="propertyType">Property Type:</label>
+            <select id="propertyType">
+                <option value="">All</option>
+                <option value="House">House</option>
+                <option value="Plot">Plot</option>
+                <option value="Flat">Flat</option>
+            </select>
+
+            <label for="city">City:</label>
+            <select id="city">
+                <option value="">All</option>
+                <option value="Islamabad">Islamabad</option>
+                <option value="Lahore">Lahore</option>
+                <option value="Karachi">Karachi</option>
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Properties Section -->
+        <h2>Properties</h2>
+        <div id="propertyList"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h3>Contact Us</h3>
+        <p>Email: info@zameenreplica.com</p>
+        <p>Phone: +92 300 1234567</p>
+        <p>&copy; 2025 Zameen.com Replica</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const properties = [
+            { type: 'House', city: 'Islamabad', title: '10 Marla House in I-8 Islamabad', price: 'PKR 5.5 Crore' },
+            { type: 'Plot', city: 'Lahore', title: '1 Kanal Plot in DHA Lahore', price: 'PKR 8 Crore' },
+            { type: 'Flat', city: 'Karachi', title: '3 Bed Flat in Clifton Karachi', price: 'PKR 2 Crore' },
+            { type: 'House', city: 'Karachi', title: '5 Marla House in Gulshan Karachi', price: 'PKR 1.2 Crore' },
+            { type: 'Plot', city: 'Islamabad', title: '12 Marla Plot in G-13 Islamabad', price: 'PKR 4 Crore' }
+        ];
+
+        const propertyList = document.getElementById('propertyList');
+        const searchForm = document.getElementById('searchForm');
+
+        // Show all properties initially
+        displayProperties(properties);
+
+        searchForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const selectedType = document.getElementById('propertyType').value;
+            const selectedCity = document.getElementById('city').value;
+
+            const filteredProperties = properties.filter(property => {
+                return (selectedType === '' || property.type === selectedType) &&
+                    (selectedCity === '' || property.city === selectedCity);
+            });
+
+            displayProperties(filteredProperties);
+        });
+
+        function displayProperties(propertiesToDisplay) {
+            propertyList.innerHTML = '';
+
+            if (propertiesToDisplay.length === 0) {
+                propertyList.innerHTML = '<p>No properties found.</p>';
+                return;
+            }
+
+            propertiesToDisplay.forEach(property => {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                card.innerHTML = `
+                    <h3>${property.title}</h3>
+                    <p>Price: ${property.price}</p>
+                    <p>Type: ${property.type}</p>
+                    <p>City: ${property.city}</p>
+                `;
+                propertyList.appendChild(card);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
